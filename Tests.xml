@@ -3,7 +3,8 @@
 <suite name="SMOKE TEST SUITE" thread-count="1" parallel="methods">
     <test name="SMOKE TESTS">
         <classes>
-            <class name="com.orangehrm"></class>
+            <class name="com.orangehrm.LoginTest"></class>
+            <class name="com.orangehrm.DashboardTest"></class>
         </classes>
     </test>
 </suite>

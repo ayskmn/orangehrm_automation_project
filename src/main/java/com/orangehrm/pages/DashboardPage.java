@@ -19,54 +19,51 @@ public class DashboardPage extends BasePage {
     DateTimeFormatter dateformatter;
 
 
-    @FindBy(xpath = "//button[@type='button']/i[1]")
+    @FindBy(xpath = "//button[contains(@class,'oxd-main-menu-button')]")
     private WebElement expandBtn;
 
     @FindBy(xpath = "//p[normalize-space()='My Actions']")
     private WebElement myActionsSign;
 
-    @FindBy(xpath = "//p[contains(.,'Leave Requests to Approve')]")
+    @FindBy(xpath = "//div[@class='orangehrm-todo-list-item']/p[contains(.,'Leave')]")
     private WebElement leaveRequestsLink;
 
     @FindBy(xpath = "//input[@placeholder='yyyy-mm-dd'][1]")
     private WebElement dateInput;
 
+    @FindBy(xpath = "(//button[contains(., 'Approve')])[1]")
+    private WebElement approveBtn;
+
+    @FindBy(xpath = "//a[@class='oxd-main-menu-item']/span[text()='Dashboard']")
+    private WebElement dashboardLink;
+
     public void clickExpandBtn() {
         expandBtn.click();
+//        Assert.assertTrue(!expandBtn.isEnabled(),"Expand button is enabled");
     }
 
     public void verifyMyActionsSign() {
         Assert.assertTrue(myActionsSign.isDisplayed());
+    }
+
+    public void findQuantityOfLeaveRequests() throws InterruptedException {
+        String leaveRequestsQuantity = leaveRequestsLink.getText().trim();
+        int numberOfRequestsBefore = Integer.parseInt((leaveRequestsQuantity.replaceAll("[a-zA-Z()]", "").trim()));
+        Thread.sleep(2000);
         leaveRequestsLink.click();
-    }
+        Thread.sleep(2000);
+        approveBtn.click();
+        dashboardLink.click();
+        int numberOfRequestsAfter = Integer.parseInt((leaveRequestsQuantity.replaceAll("[a-zA-Z()]", "").trim()));
+        Assert.assertEquals(numberOfRequestsBefore,numberOfRequestsAfter);
 
-    public void filloutLeaveList() throws InterruptedException {
-
-        localDate = LocalDateTime.now();
-        dateformatter = DateTimeFormatter.ofPattern("YYYY-MM-dd");
-        Thread.sleep(2000);
-        dateInput.sendKeys(Keys.BACK_SPACE);
-        Thread.sleep(2000);
-        dateInput.sendKeys(dateformatter.format(localDate));
-        Thread.sleep(2000);
     }
 }
 
-    class Dummy{
-        public static void main(String[] args) {
-            LocalDateTime localDate = LocalDateTime.now();
-            // DateTimeFormatter class used to format and
-            // parse date and time. ofPattern() is a method
-            // used with DateTimeFormatter to format and
-            // parse date and time.
-            DateTimeFormatter dateformatter
-                    = DateTimeFormatter.ofPattern("YYYY-MM-dd");
-            // display the date
-            System.out.println(dateformatter.format(localDate));
-            System.out.println();
-
-        }
 
 
 
-}
+
+
+
+

@@ -25,8 +25,10 @@ public abstract class BaseTest {
     protected ExtentReports reports;
     protected ExtentTest extentTest;
 
+
     @BeforeTest
     public void beforeTest(){
+
         reports = new ExtentReports(  System.getProperty("user.dir") + "/test-output/ExtentReports.html", true);
         reports.addSystemInfo( "OS NAME" , System.getProperty("os.name"));
         reports.addSystemInfo("ENGINEER", System.getProperty("user.name"));
@@ -60,11 +62,11 @@ public abstract class BaseTest {
         Driver.quitDriver();
     }
 
-//    @AfterTest
-//    public void afterTest(){
-//        reports.flush();
-//        reports.close();
-//    }
+    @AfterTest
+    public void afterTest(){
+        reports.flush();
+        reports.close();
+    }
 
     public static String getScreenshot(WebDriver driver, String screenshotName) throws IOException {
         String dateName = new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());
